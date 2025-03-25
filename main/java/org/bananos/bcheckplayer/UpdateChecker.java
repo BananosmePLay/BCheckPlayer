@@ -30,6 +30,7 @@ public class UpdateChecker {
                 HttpURLConnection connection = (HttpURLConnection) new URL(
                         "https://api.github.com/repos/BananosmePLay/BCheckPlayer/releases/latest").openConnection();
                 connection.setRequestMethod("GET");
+                connection.setRequestProperty("User-Agent", "BCheckPlayer-Plugin"); // Добавьте эту строку
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 JSONObject response = (JSONObject) new JSONParser().parse(reader);
@@ -44,7 +45,7 @@ public class UpdateChecker {
         });
     }
 
-    private boolean isNewVersionAvailable() {
+    public boolean isNewVersionAvailable() {
         if (latestVersion == null || currentVersion == null) {
             return false;
         }

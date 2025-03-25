@@ -25,10 +25,10 @@ public final class BCheckPlayer extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        new Metrics(this, 12345);
+        new Metrics(this,25242);
         setupVault();
 
-        // Инициализация менеджеров должна быть перед проверкой обновлений
+        // Инициализация менеджеров
         this.configManager = new ConfigManager(this);
         this.messageManager = new MessageManager(this);
         this.titleManager = new TitleManager(this);
@@ -54,7 +54,6 @@ public final class BCheckPlayer extends JavaPlugin {
         getLogger().info("BCheckPlayer v" + getDescription().getVersion() + " успешно запущен!");
     }
 
-    // Метод должен быть вне onEnable()
     public void checkUpdatesCommand(CommandSender sender) {
         if (updateChecker == null) {
             sender.sendMessage(ChatColor.RED + "Система проверки обновлений не инициализирована");
