@@ -1,7 +1,7 @@
 # BCheckPlayer - плагин для проверки игроков
 
 ## Как установить
-1. Скачайте файл `BCheckPlayer.jar` из раздела [Releases](ссылка)
+1. Скачайте файл `BCheckPlayer.jar` из раздела [Releases](https://github.com/BananosmePLay/BCheckPlayer/releases)
 2. Перекиньте в папку `plugins` на сервере
 3. Перезапустите сервер
 
