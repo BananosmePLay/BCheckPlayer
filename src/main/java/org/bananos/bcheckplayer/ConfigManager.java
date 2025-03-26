@@ -38,12 +38,11 @@ public class ConfigManager {
         config.addDefault("messages.player-cleared", "&aВы признаны чистым!");
         config.addDefault("messages.not-in-check", "&cВы не проводите проверку!");
         config.addDefault("messages.instructions", new String[]{
-                "&6Инструкция 1: Не двигайтесь",
-                "&6Инструкция 2: Не используйте предметы",
-                "&6Инструкция 3: Ожидайте дальнейших указаний"
+                "&6╔ &fПроверка на читы!",
+                "&6╚ &fПишите свой &1&lDiscord &fили код &c&lAnyDesk"
         });
 
-        config.addDefault("sounds.check-start.sound", "ENTITY_EXPERIENCE_ORB_PICKUP");
+        config.addDefault("sounds.check-start.sound", "ENTITY_RAVAGER_DEATH");
         config.addDefault("sounds.check-start.volume", 1.0);
         config.addDefault("sounds.check-start.pitch", 1.0);
 
