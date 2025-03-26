@@ -20,6 +20,7 @@ public final class BCheckPlayer extends JavaPlugin {
     private boolean placeholderAPIEnabled;
     private SoundManager soundManager;
     private UpdateChecker updateChecker;
+    private ColorManager colorManager;
 
     @Override
     public void onEnable() {
@@ -35,6 +36,7 @@ public final class BCheckPlayer extends JavaPlugin {
         this.chatManager = new ChatManager(this);
         this.soundManager = new SoundManager(this);
         this.checkManager = new CheckManager(this);
+        this.colorManager = new ColorManager();
 
         // Проверка PlaceholderAPI
         placeholderAPIEnabled = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
@@ -136,6 +138,8 @@ public final class BCheckPlayer extends JavaPlugin {
     public SoundManager getSoundManager() {
         return soundManager;
     }
+
+    public ColorManager getColorManager() {return colorManager;}
 
     public void reloadPluginConfig() {
         reloadConfig();

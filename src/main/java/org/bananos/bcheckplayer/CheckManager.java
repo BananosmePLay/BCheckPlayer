@@ -44,30 +44,28 @@ public class CheckManager {
 
         checker.sendMessage(plugin.getMessageManager().getMessage("check-started", "%player%", target.getName()));
         titleManager.sendTitle(target, "target-notification");
-
-        // Воспроизводим звук только у проверяемого игрока
         plugin.getSoundManager().playSound(target, "check-start");
 
-        // Показываем всю инструкцию сразу с задержкой
+        // Отправляем все инструкции сразу
         String[] instructions = plugin.getConfigManager().getInstructions();
-        int delay = plugin.getConfigManager().getInstructionDelay() * 20;
-
-        new BukkitRunnable() {
-            private int current = 0;
-
-            @Override
-            public void run() {
-                if (current < instructions.length) {
-                    target.sendMessage(instructions[current]);
-                    current++;
-                } else {
-                    if (plugin.getConfigManager().isAutoEndCheck()) {
-                        endCheck(checker, true);
-                    }
-                    cancel();
-                }
+        for (String instruction : instructions) {
+            if (instruction != null && !instruction.isEmpty()) {
+                target.sendMessage(ColorManager.translate(instruction));
             }
-        }.runTaskTimer(plugin, delay, delay);
+        }
+
+        // Инициализируем задачу для автоматического завершения
+        if (plugin.getConfigManager().isAutoEndCheck()) {
+            BukkitTask task = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    endCheck(checker, true);
+                }
+            }.runTaskLater(plugin, plugin.getConfigManager().getInstructionDelay() * 20);
+
+            // Устанавливаем задачу в сессию
+            session.setInstructionTask(task);
+        }
 
         plugin.getChatManager().startChatSession(checker, target);
     }
@@ -97,14 +95,13 @@ public class CheckManager {
                     current++;
                 }
 
-                if (current < instructions.length) {
-                    session.getTarget().sendMessage(instructions[current]);
-                    current++;
-                } else {
-                    if (plugin.getConfigManager().isAutoEndCheck()) {
-                        endCheck(session.getChecker(), true);
-                    }
-                    cancel();
+                if (plugin.getConfigManager().isAutoEndCheck()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            endCheck(checker, true);
+                        }
+                    }.runTaskLater(plugin, delay);
                 }
             }
         }.runTaskTimer(plugin, delay, delay);
@@ -115,7 +112,10 @@ public class CheckManager {
     public void endCheck(Player checker, boolean notify) {
         CheckSession session = activeChecks.remove(checker.getUniqueId());
         if (session != null) {
-            session.getInstructionTask().cancel();
+            // Добавляем проверку на null перед отменой задачи
+            if (session.getInstructionTask() != null) {
+                session.getInstructionTask().cancel();
+            }
             lastActivity.remove(session.getTarget().getUniqueId());
             plugin.getChatManager().endChatSession(checker);
 
