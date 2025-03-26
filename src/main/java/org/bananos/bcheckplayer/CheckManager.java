@@ -95,13 +95,14 @@ public class CheckManager {
                     current++;
                 }
 
-                if (plugin.getConfigManager().isAutoEndCheck()) {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            endCheck(checker, true);
-                        }
-                    }.runTaskLater(plugin, delay);
+                if (current < instructions.length) {
+                    session.getTarget().sendMessage(instructions[current]);
+                    current++;
+                } else {
+                    if (plugin.getConfigManager().isAutoEndCheck()) {
+                        endCheck(session.getChecker(), true);
+                    }
+                    cancel();
                 }
             }
         }.runTaskTimer(plugin, delay, delay);
