@@ -56,13 +56,17 @@ public class CheckManager {
 
         // Инициализируем задачу для автоматического завершения
         if (plugin.getConfigManager().isAutoEndCheck()) {
-            // Используем отдельную задержку для автозавершения (не instructionDelay!)
-            int autoEndDelay = 20 * 60 * 5; // Например, 5 минут (в тиках)
+            int autoEndDelay = plugin.getConfigManager().getInt("settings.auto-end-delay", 300) * 20;
 
             BukkitTask task = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    endCheck(checker, true);
+                    Player checker = session.getChecker();
+                    if (checker != null && checker.isOnline()) {
+                        endCheck(checker, true);
+                    } else {
+                        activeChecks.remove(session.getTarget().getUniqueId());
+                    }
                 }
             }.runTaskLater(plugin, autoEndDelay);
 
@@ -77,52 +81,19 @@ public class CheckManager {
         if (session != null) {
             Player target = session.getTarget();
             titleManager.sendTitle(target, "player-cleared");
-            // Воспроизводим звук только у проверяемого игрока
             plugin.getSoundManager().playSound(target, "check-end");
             endCheck(checker, false);
         }
     }
 
-    private void startInstructions(CheckSession session) {
-        int autoEndDelay = plugin.getConfigManager().getInt("settings.auto-end-delay") * 20;
-        String[] instructions = plugin.getConfigManager().getInstructions();
-
-        BukkitTask task = new BukkitRunnable() {
-            private int current = 0;
-
-            @Override
-            public void run() {
-                while (current < instructions.length &&
-                        (instructions[current] == null || instructions[current].isEmpty())) {
-                    current++;
-                }
-
-                if (current < instructions.length) {
-                    session.getTarget().sendMessage(instructions[current]);
-                    current++;
-                } else {
-                    if (plugin.getConfigManager().isAutoEndCheck()) {
-                        endCheck(session.getChecker(), true);
-                    }
-                    cancel();
-                }
-            }
-        }.runTaskTimer(plugin, delay, delay);
-
-        session.setInstructionTask(task);
-    }
-
     public void endCheck(Player checker, boolean notify) {
         CheckSession session = activeChecks.remove(checker.getUniqueId());
         if (session != null) {
-            // Добавляем проверку на null перед отменой задачи
             if (session.getInstructionTask() != null) {
                 session.getInstructionTask().cancel();
             }
             lastActivity.remove(session.getTarget().getUniqueId());
             plugin.getChatManager().endChatSession(checker);
-
-            // Воспроизводим звук только у проверяемого игрока
             plugin.getSoundManager().playSound(session.getTarget(), "check-end");
 
             if (notify) {
@@ -139,11 +110,8 @@ public class CheckManager {
             Player checker = Bukkit.getPlayer(entry.getKey());
             Player target = entry.getValue().getTarget();
 
-            // Если игрок вышел или неактивен более 24 часов
             if (target == null || !target.isOnline() ||
                     (lastActivity.getOrDefault(target.getUniqueId(), 0L) + timeout < now)) {
-
-                // Тихий выход без уведомлений
                 if (checker != null && checker.isOnline()) {
                     activeChecks.remove(entry.getKey());
                     lastActivity.remove(target.getUniqueId());

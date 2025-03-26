@@ -18,7 +18,6 @@ public class ConfigManager {
         plugin.saveDefaultConfig();
         config = plugin.getConfig();
 
-        // Настройки локации
         config.addDefault("check-location.world", "world");
         config.addDefault("check-location.x", 0);
         config.addDefault("check-location.y", 70);
@@ -26,11 +25,9 @@ public class ConfigManager {
         config.addDefault("check-location.yaw", 0);
         config.addDefault("check-location.pitch", 0);
 
-        // Форматы сообщений
         config.addDefault("formats.checker-format", "&e[ &bПроверяющий &e] &r%vault_prefix% &f%player_name% &f>> &f%message%");
         config.addDefault("formats.target-format", "&e[ &bИгрок &e] &r%vault_prefix% &f%player_name% &f>> &f%message%");
 
-        // Сообщения
         config.addDefault("messages.no-permission", "&cУ вас нет прав на эту команду!");
         config.addDefault("messages.only-players", "&cТолько игроки могут использовать эту команду!");
         config.addDefault("messages.check-usage", "&eИспользование: /check <ник> [clear]");
@@ -38,7 +35,6 @@ public class ConfigManager {
         config.addDefault("messages.check-started", "&aВы начали проверку игрока %player%");
         config.addDefault("messages.check-complete", "&aПроверка завершена!");
         config.addDefault("messages.player-cleared", "&aВы признаны чистым!");
-        config.addDefault("messages.movement-restricted", "&cВы не можете двигаться во время проверки!");
         config.addDefault("messages.not-in-check", "&cВы не проводите проверку!");
         config.addDefault("messages.instructions", new String[]{
                 "&6Инструкция 1: Не двигайтесь",
@@ -46,7 +42,6 @@ public class ConfigManager {
                 "&6Инструкция 3: Ожидайте дальнейших указаний"
         });
 
-        // Звуки
         config.addDefault("sounds.check-start.sound", "ENTITY_EXPERIENCE_ORB_PICKUP");
         config.addDefault("sounds.check-start.volume", 1.0);
         config.addDefault("sounds.check-start.pitch", 1.0);
@@ -55,7 +50,6 @@ public class ConfigManager {
         config.addDefault("sounds.check-end.volume", 1.0);
         config.addDefault("sounds.check-end.pitch", 1.0);
 
-        // Титулы
         config.addDefault("titles.target-notification.title", "&cПРОВЕРКА");
         config.addDefault("titles.target-notification.subtitle", "&fСледуйте инструкциям проверяющего");
         config.addDefault("titles.target-notification.fadeIn", 10);
@@ -68,12 +62,10 @@ public class ConfigManager {
         config.addDefault("titles.player-cleared.stay", 70);
         config.addDefault("titles.player-cleared.fadeOut", 20);
 
-        // Доп. Настройки
         config.addDefault("settings.inactivity-timeout", 1440);
         config.addDefault("settings.restrict-movement", true);
         config.addDefault("settings.use-placeholderapi", true);
         config.addDefault("settings.auto-end-check", true);
-        config.addDefault("settings.inactivity-timeout", 1440);
         config.addDefault("settings.update-checker", true);
         config.addDefault("settings.update-notify", true);
         config.addDefault("settings.auto-end-delay", 300);
@@ -102,7 +94,7 @@ public class ConfigManager {
     }
 
     public int getInactivityTimeout() {
-        return config.getInt("settings.inactivity-timeout", 1440);
+        return config.getInt("settings.inactivity-timeout");
     }
 
     public ConfigurationSection getSoundConfig(String soundKey) {
@@ -110,23 +102,23 @@ public class ConfigManager {
     }
 
     public boolean isUpdateCheckerEnabled() {
-        return config.getBoolean("settings.update-checker", true);
+        return config.getBoolean("settings.update-checker");
     }
 
     public boolean isUpdateNotifyEnabled() {
-        return config.getBoolean("settings.update-notify", true);
+        return config.getBoolean("settings.update-notify");
     }
 
     public boolean isMovementRestricted() {
-        return config.getBoolean("settings.restrict-movement", true);
+        return config.getBoolean("settings.restrict-movement");
     }
 
     public boolean usePlaceholderAPI() {
-        return config.getBoolean("settings.use-placeholderapi", true);
+        return config.getBoolean("settings.use-placeholderapi");
     }
 
     public boolean isAutoEndCheck() {
-        return config.getBoolean("settings.auto-end-check", true);
+        return config.getBoolean("settings.auto-end-check");
     }
 
     public String[] getInstructions() {
@@ -135,5 +127,13 @@ public class ConfigManager {
 
     public ConfigurationSection getTitleConfig(String titleKey) {
         return config.getConfigurationSection("titles." + titleKey);
+    }
+
+    public int getInt(String path) {
+        return config.getInt(path);
+    }
+
+    public int getInt(String path, int defaultValue) {
+        return config.getInt(path, defaultValue);
     }
 }
