@@ -122,6 +122,10 @@ public class ConfigManager {
         return config.getBoolean("settings.auto-end-check");
     }
 
+    public FileConfiguration getConfig() {
+        return config;
+    }
+
     public String[] getInstructions() {
         return config.getStringList("messages.instructions").toArray(new String[0]);
     }
