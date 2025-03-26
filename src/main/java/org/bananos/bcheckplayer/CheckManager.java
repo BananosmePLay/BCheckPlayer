@@ -56,14 +56,16 @@ public class CheckManager {
 
         // Инициализируем задачу для автоматического завершения
         if (plugin.getConfigManager().isAutoEndCheck()) {
+            // Используем отдельную задержку для автозавершения (не instructionDelay!)
+            int autoEndDelay = 20 * 60 * 5; // Например, 5 минут (в тиках)
+
             BukkitTask task = new BukkitRunnable() {
                 @Override
                 public void run() {
                     endCheck(checker, true);
                 }
-            }.runTaskLater(plugin, plugin.getConfigManager().getInstructionDelay() * 20);
+            }.runTaskLater(plugin, autoEndDelay);
 
-            // Устанавливаем задачу в сессию
             session.setInstructionTask(task);
         }
 
@@ -82,7 +84,7 @@ public class CheckManager {
     }
 
     private void startInstructions(CheckSession session) {
-        int delay = plugin.getConfigManager().getInstructionDelay() * 20;
+        int autoEndDelay = plugin.getConfigManager().getInt("settings.auto-end-delay") * 20;
         String[] instructions = plugin.getConfigManager().getInstructions();
 
         BukkitTask task = new BukkitRunnable() {
@@ -133,13 +135,23 @@ public class CheckManager {
         long now = System.currentTimeMillis();
         long timeout = plugin.getConfigManager().getInactivityTimeout() * 60 * 1000;
 
-        activeChecks.forEach((checkerId, session) -> {
-            Player target = session.getTarget();
-            Long lastActive = lastActivity.get(target.getUniqueId());
+        activeChecks.entrySet().removeIf(entry -> {
+            Player checker = Bukkit.getPlayer(entry.getKey());
+            Player target = entry.getValue().getTarget();
 
-            if (lastActive == null || (now - lastActive) > timeout) {
-                endCheck(Bukkit.getPlayer(checkerId), true);
+            // Если игрок вышел или неактивен более 24 часов
+            if (target == null || !target.isOnline() ||
+                    (lastActivity.getOrDefault(target.getUniqueId(), 0L) + timeout < now)) {
+
+                // Тихий выход без уведомлений
+                if (checker != null && checker.isOnline()) {
+                    activeChecks.remove(entry.getKey());
+                    lastActivity.remove(target.getUniqueId());
+                    plugin.getChatManager().endChatSession(checker);
+                }
+                return true;
             }
+            return false;
         });
     }
 

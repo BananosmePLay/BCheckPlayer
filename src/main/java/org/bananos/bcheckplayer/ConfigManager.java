@@ -67,15 +67,16 @@ public class ConfigManager {
         config.addDefault("titles.player-cleared.fadeIn", 10);
         config.addDefault("titles.player-cleared.stay", 70);
         config.addDefault("titles.player-cleared.fadeOut", 20);
-        config.addDefault("settings.update-checker", true);
-        config.addDefault("settings.update-notify", true);
 
         // Доп. Настройки
-        config.addDefault("settings.instruction-delay", 5);
         config.addDefault("settings.inactivity-timeout", 1440);
         config.addDefault("settings.restrict-movement", true);
         config.addDefault("settings.use-placeholderapi", true);
         config.addDefault("settings.auto-end-check", true);
+        config.addDefault("settings.inactivity-timeout", 1440);
+        config.addDefault("settings.update-checker", true);
+        config.addDefault("settings.update-notify", true);
+        config.addDefault("settings.auto-end-delay", 300);
 
         config.options().copyDefaults(true);
         plugin.saveConfig();
@@ -98,10 +99,6 @@ public class ConfigManager {
 
     public String getTargetFormat() {
         return config.getString("formats.target-format");
-    }
-
-    public int getInstructionDelay() {
-        return config.getInt("settings.instruction-delay");
     }
 
     public int getInactivityTimeout() {

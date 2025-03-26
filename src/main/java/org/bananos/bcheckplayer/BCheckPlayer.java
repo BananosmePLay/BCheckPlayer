@@ -99,6 +99,7 @@ public final class BCheckPlayer extends JavaPlugin {
         }
     }
 
+
     @Override
     public void onDisable() {
         getLogger().info("BCheckPlayer отключен!");

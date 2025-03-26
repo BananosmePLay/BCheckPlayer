@@ -12,7 +12,7 @@ formats:
 
 sounds:
   check-start: # звук в начале проверки
-    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    sound: "ENTITY_RAVAGER_DEATH"
     volume: 1.0
     pitch: 1.0
   check-end: # Звук в конце проверки
@@ -32,8 +32,8 @@ messages:
   cannot-check-self: "&cВы не можете проверить самого себя!"
   cannot-check-staff: "&cВы не можете проверить этого игрока!"
   instructions:
-    - " &a╔ &6Проверка на читы!"
-    - " &a╚ &6Пишите свой &1Discord или код &cAnyDesk"
+    - "&6╔ &fПроверка на читы!"
+    - "&6╚ &fПишите свой &1&lDiscord &fили код &c&lAnyDesk"
 
 titles:
   target-notification:
@@ -50,7 +50,7 @@ titles:
     fadeOut: 10
 
 settings:
-  instruction-delay: 5 # Задержка между показом всей инструкции
+  auto-end-delay: 86400 # Автомотическое завершение проверки через 1 день
   restrict-movement: true # вкл/выкл возможность движения. default: true
   use-placeholderapi: true
   update-checker: true
