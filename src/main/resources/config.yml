@@ -31,6 +31,7 @@ messages:
   player-cleared: "&aВы свободный. Удачной игры!"
   cannot-check-self: "&cВы не можете проверить самого себя!"
   cannot-check-staff: "&cВы не можете проверить этого игрока!"
+  cant-use-commands: "&cВы не можете использовать команды во время проверки!"
   instructions:
     - "&6╔ &fПроверка на читы!"
     - "&6╚ &fПишите свой &1&lDiscord &fили код &c&lAnyDesk"

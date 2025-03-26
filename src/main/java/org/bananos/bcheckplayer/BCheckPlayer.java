@@ -26,37 +26,60 @@ public final class BCheckPlayer extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        new Metrics(this,25242);
-        setupVault();
+        // Инициализация метрик и зависимостей
+        initializeMetricsAndDependencies();
 
         // Инициализация менеджеров
+        initializeManagers();
+
+        // Регистрация команд и событий
+        registerCommandsAndEvents();
+
+        getLogger().info("BCheckPlayer enabled");
+    }
+
+    private void initializeMetricsAndDependencies() {
+        new Metrics(this, 25242);
+        setupVault();
+        placeholderAPIEnabled = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
+    }
+
+    private void initializeManagers() {
         this.configManager = new ConfigManager(this);
         this.messageManager = new MessageManager(this);
         this.titleManager = new TitleManager(this);
         this.chatManager = new ChatManager(this);
         this.soundManager = new SoundManager(this);
-        this.checkManager = new CheckManager(this);
         this.colorManager = new ColorManager();
+        this.checkManager = new CheckManager(this);
 
-        // Проверка PlaceholderAPI
-        placeholderAPIEnabled = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
-
-        // Инициализация проверки обновлений
         this.updateChecker = new UpdateChecker(this);
         if (getConfigManager().isUpdateCheckerEnabled()) {
             this.updateChecker.checkForUpdates();
         }
+    }
 
-        // Регистрация команд и событий
+    private void registerCommandsAndEvents() {
+        // Регистрация команд
         getCommand("check").setExecutor(new CheckCommand(this));
         getCommand("bcheck").setExecutor(new ReloadCommand(this));
+
+        // Регистрация обработчиков событий
+        registerEventListeners();
+    }
+
+    private void registerEventListeners() {
+        // Основные слушатели
         getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
-        getLogger().info("BCheckPlayer v" + getDescription().getVersion() + " успешно запущен!");
+        // Слушатели для ограничений при проверке
+        getServer().getPluginManager().registerEvents(new PlayerDropItemListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
     }
 
+    // Остальные методы остаются без изменений
     public void checkUpdatesCommand(CommandSender sender) {
         if (updateChecker == null) {
             sender.sendMessage(ChatColor.RED + "Система проверки обновлений не инициализирована");
@@ -99,12 +122,12 @@ public final class BCheckPlayer extends JavaPlugin {
         }
     }
 
-
     @Override
     public void onDisable() {
-        getLogger().info("BCheckPlayer отключен!");
+        getLogger().info("BCheckPlayer disabled!");
     }
 
+    // Геттеры
     public static BCheckPlayer getInstance() {
         return instance;
     }
@@ -141,13 +164,16 @@ public final class BCheckPlayer extends JavaPlugin {
         return soundManager;
     }
 
-    public ColorManager getColorManager() {return colorManager;}
+    public ColorManager getColorManager() {
+        return colorManager;
+    }
 
-    public UpdateChecker getUpdateChecker() {return updateChecker;}
+    public UpdateChecker getUpdateChecker() {
+        return updateChecker;
+    }
 
     public void reloadPluginConfig() {
         reloadConfig();
         configManager.setupConfig();
     }
-
 }

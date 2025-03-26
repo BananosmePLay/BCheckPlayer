@@ -1,10 +1,9 @@
 package org.bananos.bcheckplayer;
 
-import org.bukkit.entity.Player;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerMoveListener implements Listener {
     private final BCheckPlayer plugin;
@@ -15,22 +14,15 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-
-        if (plugin.getCheckManager().isPlayerBeingChecked(player)) {
-            // Полная блокировка всех видов движения
-            event.setTo(event.getFrom());
+        if (plugin.getCheckManager().isPlayerBeingChecked(event.getPlayer())) {
+            // Блокируем только изменение координат
+            if (hasChangedPosition(event.getFrom(), event.getTo())) {
+                event.setTo(event.getFrom());
+            }
         }
     }
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        if (plugin.getCheckManager().isPlayerBeingChecked(player)) {
-            Player checker = plugin.getCheckManager().getCheckPartner(player);
-            if (checker != null) {
-                plugin.getCheckManager().endCheck(checker, false);
-            }
-        }
+    private boolean hasChangedPosition(Location from, Location to) {
+        return from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ();
     }
 }

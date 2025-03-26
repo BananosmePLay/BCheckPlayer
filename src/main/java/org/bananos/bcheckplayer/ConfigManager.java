@@ -31,6 +31,7 @@ public class ConfigManager {
         config.addDefault("messages.no-permission", "&cУ вас нет прав на эту команду!");
         config.addDefault("messages.only-players", "&cТолько игроки могут использовать эту команду!");
         config.addDefault("messages.check-usage", "&eИспользование: /check <ник> [clear]");
+        config.addDefault("messages.cant-use-commands", "&cВы не можете использовать команды во время проверки!");
         config.addDefault("messages.player-not-found", "&cИгрок не найден!");
         config.addDefault("messages.check-started", "&aВы начали проверку игрока %player%");
         config.addDefault("messages.check-complete", "&aПроверка завершена!");
