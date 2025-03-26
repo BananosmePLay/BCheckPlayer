@@ -40,11 +40,9 @@ public class UpdateNotifier {
 
     public String getUpdateMessage() {
         return ChatColor.translateAlternateColorCodes('&', String.format(
-                "&e[BCheckPlayer] &fДоступно обновление!%n" +
-                        "&fТекущая версия: &c%s%n" +
-                        "&fНовая версия: &a%s%n" +
-                        "&fСкачать: &b%s",
-                currentVersion, latestVersion, downloadUrl
+                "&e[BCheckPlayer] &fДоступно обновление &a%s &f(у вас &c%s&f)%n" +
+                        "&7Скачать: &b%s",
+                latestVersion, currentVersion, downloadUrl
         ));
     }
 }

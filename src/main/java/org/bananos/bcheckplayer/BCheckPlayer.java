@@ -52,6 +52,7 @@ public final class BCheckPlayer extends JavaPlugin {
         getCommand("bcheck").setExecutor(new ReloadCommand(this));
         getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         getLogger().info("BCheckPlayer v" + getDescription().getVersion() + " успешно запущен!");
     }
@@ -140,6 +141,8 @@ public final class BCheckPlayer extends JavaPlugin {
     }
 
     public ColorManager getColorManager() {return colorManager;}
+
+    public UpdateChecker getUpdateChecker() {return updateChecker;}
 
     public void reloadPluginConfig() {
         reloadConfig();

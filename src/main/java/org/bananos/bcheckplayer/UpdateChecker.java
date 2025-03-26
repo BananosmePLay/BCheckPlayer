@@ -62,10 +62,13 @@ public class UpdateChecker {
         notifier.notifyAdmins();
     }
 
+    public UpdateNotifier getUpdateNotifier() {
+        return new UpdateNotifier(plugin, currentVersion, latestVersion);
+    }
+
     public String getCurrentVersion() {
         return currentVersion;
     }
-
     public String getLatestVersion() {
         return latestVersion;
     }
