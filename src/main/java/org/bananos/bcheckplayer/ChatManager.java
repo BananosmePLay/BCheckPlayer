@@ -5,7 +5,6 @@ import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,10 +41,8 @@ public class ChatManager {
     }
 
     public String getFormattedMessage(Player sender, Player receiver, String message) {
-        // Определяем роль отправителя
         String role = plugin.getCheckManager().isChecking(sender) ? "Проверяющий" : "Игрок";
 
-        // Получаем соответствующий формат
         String format = role.equals("Проверяющий")
                 ? plugin.getConfigManager().getCheckerFormat()
                 : plugin.getConfigManager().getTargetFormat();

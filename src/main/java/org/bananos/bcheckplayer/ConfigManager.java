@@ -103,11 +103,11 @@ public class ConfigManager {
     }
 
     public boolean isUpdateCheckerEnabled() {
-        return config.getBoolean("settings.update-checker");
+        return config.getBoolean("settings.update-checker", true);
     }
 
     public boolean isUpdateNotifyEnabled() {
-        return config.getBoolean("settings.update-notify");
+        return config.getBoolean("settings.update-notify", true);
     }
 
     public boolean isMovementRestricted() {

@@ -20,9 +20,7 @@ public class PlayerChatListener implements Listener {
             event.setCancelled(true);
             Player partner = plugin.getCheckManager().getCheckPartner(player);
             if (partner != null) {
-                // Для партнера сообщение форматируется с точки зрения отправителя
                 partner.sendMessage(plugin.getChatManager().getFormattedMessage(player, partner, event.getMessage()));
-                // Для самого игрока сообщение форматируется с его точки зрения
                 player.sendMessage(plugin.getChatManager().getFormattedMessage(player, player, event.getMessage()));
             }
         }

@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -46,7 +45,6 @@ public class CheckManager {
         titleManager.sendTitle(target, "target-notification");
         plugin.getSoundManager().playSound(target, "check-start");
 
-        // Отправляем все инструкции сразу
         String[] instructions = plugin.getConfigManager().getInstructions();
         for (String instruction : instructions) {
             if (instruction != null && !instruction.isEmpty()) {
@@ -54,7 +52,6 @@ public class CheckManager {
             }
         }
 
-        // Инициализируем задачу для автоматического завершения
         if (plugin.getConfigManager().isAutoEndCheck()) {
             int autoEndDelay = plugin.getConfigManager().getInt("settings.auto-end-delay", 300) * 20;
 

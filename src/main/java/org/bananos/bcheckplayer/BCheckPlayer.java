@@ -1,6 +1,5 @@
 package org.bananos.bcheckplayer;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.milkbowl.vault.chat.Chat;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -26,13 +25,10 @@ public final class BCheckPlayer extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Инициализация метрик и зависимостей
         initializeMetricsAndDependencies();
 
-        // Инициализация менеджеров
         initializeManagers();
 
-        // Регистрация команд и событий
         registerCommandsAndEvents();
 
         getLogger().info("BCheckPlayer enabled");
@@ -79,7 +75,6 @@ public final class BCheckPlayer extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
     }
 
-    // Остальные методы остаются без изменений
     public void checkUpdatesCommand(CommandSender sender) {
         if (updateChecker == null) {
             sender.sendMessage(ChatColor.RED + "Система проверки обновлений не инициализирована");
@@ -135,42 +130,31 @@ public final class BCheckPlayer extends JavaPlugin {
     public CheckManager getCheckManager() {
         return checkManager;
     }
-
     public ConfigManager getConfigManager() {
         return configManager;
     }
-
     public MessageManager getMessageManager() {
         return messageManager;
     }
-
     public ChatManager getChatManager() {
         return chatManager;
     }
-
     public TitleManager getTitleManager() {
         return titleManager;
     }
-
     public Chat getVaultChat() {
         return vaultChat;
     }
-
-    public boolean isPlaceholderAPIEnabled() {
-        return placeholderAPIEnabled;
-    }
-
     public SoundManager getSoundManager() {
         return soundManager;
     }
-
     public ColorManager getColorManager() {
         return colorManager;
     }
-
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
     }
+    public boolean isPlaceholderAPIEnabled() {return placeholderAPIEnabled;}
 
     public void reloadPluginConfig() {
         reloadConfig();

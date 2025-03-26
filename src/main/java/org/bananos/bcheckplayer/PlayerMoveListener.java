@@ -15,7 +15,6 @@ public class PlayerMoveListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (plugin.getCheckManager().isPlayerBeingChecked(event.getPlayer())) {
-            // Блокируем только изменение координат
             if (hasChangedPosition(event.getFrom(), event.getTo())) {
                 event.setTo(event.getFrom());
             }
