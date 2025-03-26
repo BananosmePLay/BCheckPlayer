@@ -16,7 +16,7 @@ public class PlayerMoveListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getCheckManager().isPlayerBeingChecked(player) {
+        if (plugin.getCheckManager().isPlayerBeingChecked(player)) {
             // Полная блокировка всех видов движения
             event.setTo(event.getFrom());
         }
