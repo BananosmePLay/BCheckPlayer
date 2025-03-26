@@ -1,0 +1,57 @@
+check-location: # коардинаты и мир телепортации
+  world: world
+  x: 0
+  y: 70
+  z: 0
+  yaw: 0
+  pitch: 0
+
+formats:
+  checker-format: "&e[ &bПроверяющий &e] &r%vault_prefix% &f%player_name% &f>> &f%message%"
+  target-format: "&e[ &bИгрок &e] &r%vault_prefix% &f%player_name% &f>> &f%message%"
+
+sounds:
+  check-start: # звук в начале проверки
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    volume: 1.0
+    pitch: 1.0
+  check-end: # Звук в конце проверки
+    sound: "ENTITY_PLAYER_LEVELUP"
+    volume: 1.0
+    pitch: 1.0
+
+messages:
+  reload-success: "&aУспешная перезагрузка"
+  no-permission: "&cУ вас нет прав на эту команду!"
+  only-players: "&cТолько игроки могут использовать эту команду!"
+  check-usage: "&eИспользование: /check <ник> [clear]"
+  player-not-found: "&cИгрок не найден!"
+  check-started: "&aВы начали проверку игрока %player%"
+  check-complete: "&aПроверка завершена!"
+  player-cleared: "&aВы свободный. Удачной игры!"
+  cannot-check-self: "&cВы не можете проверить самого себя!"
+  cannot-check-staff: "&cВы не можете проверить этого игрока!"
+  instructions:
+    - " &a╔ &6Проверка на читы!"
+    - " &a╚ &6Пишите свой &1Discord или код &cAnyDesk"
+
+titles:
+  target-notification:
+    title: "&cПроверка на читы"
+    subtitle: ""
+    fadeIn: 5
+    stay: 150
+    fadeOut: 5
+  player-cleared:
+    title: "&aПроверка пройдена"
+    subtitle: "&fУдачной игры"
+    fadeIn: 5
+    stay: 40
+    fadeOut: 10
+
+settings:
+  instruction-delay: 5 # Задержка между показом всей инструкции
+  restrict-movement: true # вкл/выкл возможность движения. default: true
+  use-placeholderapi: true
+  update-checker: true
+  update-notify: true

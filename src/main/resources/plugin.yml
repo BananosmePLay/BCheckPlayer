@@ -1,0 +1,28 @@
+name: BCheckPlayer
+version: 0.0.3
+main: org.bananos.bcheckplayer.BCheckPlayer
+api-version: 1.16
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+commands:
+  check:
+    description: Проверка игрока на читы
+    usage: /check <player> [clear]
+    permission: bcheckplayer.check
+    permission-message: "&cУ вас нет прав на эту команду!"
+  bcheck:
+    description: Управление плагином проверки
+    usage: /bcheck reload
+    permission: bcheckplayer.admin
+    permission-message: "&cУ вас нет прав на эту команду!"
+
+permissions:
+  bcheckplayer.check:
+    description: Позволяет использовать команды проверки
+    default: op
+  bcheckplayer.admin:
+    description: Позволяет управлять плагином
+    default: op
+  bcheckplayer.bypass:
+    description: Защита от проверки
+    default: op
