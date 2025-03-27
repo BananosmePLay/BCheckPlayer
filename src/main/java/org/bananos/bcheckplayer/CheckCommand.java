@@ -86,4 +86,5 @@ public class CheckCommand implements CommandExecutor, TabCompleter {
 
         return completions;
     }
+
 }

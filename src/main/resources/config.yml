@@ -54,5 +54,7 @@ settings:
   auto-end-delay: 86400 # Автомотическое завершение проверки через 1 день
   restrict-movement: true # вкл/выкл возможность движения. default: true
   use-placeholderapi: true
+  restrict-building: true
+  restrict-interactions: true
   update-checker: true
   update-notify: true

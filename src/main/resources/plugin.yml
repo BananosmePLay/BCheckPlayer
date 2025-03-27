@@ -1,5 +1,5 @@
 name: BCheckPlayer
-version: 0.0.9
+version: 0.1
 main: org.bananos.bcheckplayer.BCheckPlayer
 api-version: 1.16
 depend: [Vault]

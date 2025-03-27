@@ -73,6 +73,14 @@ public final class BCheckPlayer extends JavaPlugin {
         // Слушатели для ограничений при проверке
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
+    }
+
+    public void reloadPluginConfig() {
+        reloadConfig();
+        configManager.reloadConfig();
+        messageManager = new MessageManager(this);
+        checkManager.updateConfigValues();
     }
 
     public void checkUpdatesCommand(CommandSender sender) {
@@ -156,8 +164,4 @@ public final class BCheckPlayer extends JavaPlugin {
     }
     public boolean isPlaceholderAPIEnabled() {return placeholderAPIEnabled;}
 
-    public void reloadPluginConfig() {
-        reloadConfig();
-        configManager.setupConfig();
-    }
 }

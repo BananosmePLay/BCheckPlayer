@@ -14,6 +14,11 @@ public class ConfigManager {
         setupConfig();
     }
 
+    public void reloadConfig() {
+        plugin.reloadConfig();
+        config = plugin.getConfig();
+    }
+
     public void setupConfig() {
         plugin.saveDefaultConfig();
         config = plugin.getConfig();
@@ -35,7 +40,7 @@ public class ConfigManager {
         config.addDefault("messages.player-not-found", "&cИгрок не найден!");
         config.addDefault("messages.check-started", "&aВы начали проверку игрока %player%");
         config.addDefault("messages.check-complete", "&aПроверка завершена!");
-        config.addDefault("messages.player-cleared", "&aВы признаны чистым!");
+        config.addDefault("messages.player-cleared", "&aВы свободны!");
         config.addDefault("messages.not-in-check", "&cВы не проводите проверку!");
         config.addDefault("messages.instructions", new String[]{
                 "&6╔ &fПроверка на читы!",
@@ -69,6 +74,8 @@ public class ConfigManager {
         config.addDefault("settings.update-checker", true);
         config.addDefault("settings.update-notify", true);
         config.addDefault("settings.auto-end-delay", 300);
+        config.addDefault("settings.restrict-building", true);
+        config.addDefault("settings.restrict-interactions", true);
 
         config.options().copyDefaults(true);
         plugin.saveConfig();
@@ -123,6 +130,14 @@ public class ConfigManager {
 
     public FileConfiguration getConfig() {
         return config;
+    }
+
+    public boolean isBuildingRestricted() {
+        return config.getBoolean("settings.restrict-building", true);
+    }
+
+    public boolean isInteractionsRestricted() {
+        return config.getBoolean("settings.restrict-interactions", true);
     }
 
     public String[] getInstructions() {

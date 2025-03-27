@@ -20,10 +20,7 @@ public class ReloadCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            // Показываем помощь, если нет аргументов
-            sender.sendMessage(ChatColor.GOLD + "Использование команды /bcheck:");
-            sender.sendMessage(ChatColor.YELLOW + "/bcheck reload - Перезагрузить конфигурацию");
-            sender.sendMessage(ChatColor.YELLOW + "/bcheck update - Проверить обновления");
+            sendUsage(sender);
             return true;
         }
 
@@ -36,8 +33,14 @@ public class ReloadCommand implements CommandExecutor {
                 plugin.checkUpdatesCommand(sender);
                 return true;
             default:
-                sender.sendMessage(ChatColor.RED + "Неизвестная подкоманда. Используйте /bcheck reload или /bcheck update");
+                sendUsage(sender);
                 return true;
         }
+    }
+
+    private void sendUsage(CommandSender sender) {
+        sender.sendMessage(ChatColor.GOLD + "Использование команды /bcheck:");
+        sender.sendMessage(ChatColor.YELLOW + "/bcheck reload - Перезагрузить конфигурацию");
+        sender.sendMessage(ChatColor.YELLOW + "/bcheck update - Проверить обновления");
     }
 }
