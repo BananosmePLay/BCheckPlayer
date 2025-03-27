@@ -80,7 +80,6 @@ public final class BCheckPlayer extends JavaPlugin {
         reloadConfig();
         configManager.reloadConfig();
         messageManager = new MessageManager(this);
-        checkManager.updateConfigValues();
     }
 
     public void checkUpdatesCommand(CommandSender sender) {
