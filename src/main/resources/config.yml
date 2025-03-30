@@ -7,8 +7,8 @@ check-location: # коардинаты и мир телепортации
   pitch: 0
 
 formats:
-  checker-format: "&e[ &bПроверяющий &e] &r%vault_prefix% &f%player_name% &f>> &f%message%"
-  target-format: "&e[ &bИгрок &e] &r%vault_prefix% &f%player_name% &f>> &f%message%"
+  checker-format: "&e[&6Проверяющий &7>> &6Вы&e] &f%message%"
+  target-format: "&e[&6%player_name% &7>> &6Вы&e] &f%message%"
 
 sounds:
   check-start: # звук в начале проверки
@@ -41,7 +41,7 @@ titles:
     title: "&cПроверка на читы"
     subtitle: ""
     fadeIn: 5
-    stay: 150
+    stay: 450
     fadeOut: 5
   player-cleared:
     title: "&aПроверка пройдена"
